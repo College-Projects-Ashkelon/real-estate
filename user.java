@@ -4,5 +4,6 @@ public class user {
         int y = 10;
         int sum = x + y;
         System.out.println(sum);
+
     }
 }
