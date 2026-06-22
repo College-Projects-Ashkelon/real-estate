@@ -1,7 +1,7 @@
 /**
  * מחלקה המייצגת משתמש או פעולה במערכת הנדל"ן.
  */
-public class User {
+public class user {
     public static boolean isStrongPassword(String password){
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
