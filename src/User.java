@@ -1,6 +1,16 @@
 import java.util.Scanner;
 
 public class User {
+    public static boolean isDigit(char c){
+        if (Character.isDigit(c)) {
+            return true;
+        }
+            return false;
+    }
+    public static boolean isSpecialChar(char c){
+        return !Character.isLetterOrDigit(c) && !Character.isWhitespace(c);
+
+    }
     public static boolean isStrongPassword(String pass){
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
@@ -8,12 +18,11 @@ public class User {
             char c = pass.charAt(i);
 
             // בדיקה האם התו הוא ספרה
-            if (Character.isDigit(c)) {
-                hasDigit = true;
-            }
+           if (isDigit(c))
+               hasDigit = true;
 
             // בדיקה האם התו הוא תו מיוחד (לא אות, לא ספרה ולא רווח)
-            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+            if (isSpecialChar(c)) {
                 hasSpecialChar = true;
             }
         }
@@ -49,6 +58,19 @@ public class User {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        /*
+        switch case להשלמה לאחר בניית התשתית עבור תפריט התחברות הרשמה או יציאה
+         */
+        int selectUser = scanner.nextInt();
+        switch (selectUser){
+            case 1:
+                //System.createuser();
+            case 2:
+                //login;
+            case 3:
+                //exit;
+
+        }
 
         System.out.print("Please enter a password to verify: ");
         String pass = scanner.nextLine();
@@ -62,4 +84,4 @@ public class User {
 
         scanner.close();
     }
-}ומ
+}
