@@ -1,87 +1,111 @@
-import java.util.Scanner;
-
 public class User {
-    public static boolean isDigit(char c){
-        if (Character.isDigit(c)) {
-            return true;
-        }
-            return false;
-    }
-    public static boolean isSpecialChar(char c){
-        return !Character.isLetterOrDigit(c) && !Character.isWhitespace(c);
 
+    // --- שדות ---
+    private String username;
+    private String password;
+    private String phone;
+    private boolean isBroker; // תיקנתי את טעות הכתיב
+
+    // --- בנאי ---
+    public User(String username, String password, String phone, boolean isBroker) {
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.isBroker = isBroker; // תיקנתי את טעות הכתיב
     }
-    public static boolean isStrongPassword(String pass){
+
+    // --- Getters ---
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public boolean isBroker() {
+        return isBroker;
+    }
+
+    // --- מתודות מהדרישה ---
+
+    /**
+     * בודק אם הסיסמה שהתקבלה כקלט זהה לסיסמה של המשתמש.
+     * @param input הסיסמה לבדיקה.
+     * @return true אם הסיסמאות זהות, אחרת false.
+     */
+    public boolean checkPassword(String input) {
+        // משתמשים ב-equals להשוואת מחרוזות
+        return this.password.equals(input);
+    }
+
+    /**
+     * מחזיר ייצוג טקסטואלי של המשתמש לפי הפורמט הנדרש.
+     */
+    @Override
+    public String toString() {
+        String brokerStatus = this.isBroker ? "yes" : "no";
+        return this.username + " | " + this.phone + " | broker: " + brokerStatus;
+    }
+
+    // --- מתודות עזר סטטיות (מהקוד שלך) ---
+
+    public static boolean isStrongPassword(String pass) {
+        if (pass == null) return false;
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
-        for (int i = 0; i < pass.length(); i++) {
-            char c = pass.charAt(i);
-
-            // בדיקה האם התו הוא ספרה
-           if (isDigit(c))
-               hasDigit = true;
-
-            // בדיקה האם התו הוא תו מיוחד (לא אות, לא ספרה ולא רווח)
-            if (isSpecialChar(c)) {
+        for (char c : pass.toCharArray()) {
+            if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else if (!Character.isLetter(c)) { // תו מיוחד הוא כל מה שאינו אות או ספרה
                 hasSpecialChar = true;
             }
         }
         return hasDigit && hasSpecialChar;
     }
 
-    /**
-     * בודק האם מספר טלפון הוא מספר ישראלי תקין (10 ספרות, מתחיל ב-05).
-     * @param phone מספר הטלפון לבדיקה.
-     * @return true אם המספר תקין, אחרת false.
-     */
-    private static boolean isValidPhone(String phone) {
-        // 1. בדיקה שהקלט לא ריק ושהוא באורך 10 תווים
+    public static boolean isValidPhone(String phone) {
         if (phone == null || phone.length() != 10) {
             return false;
         }
-
-        // 2. בדיקה שהמספר מתחיל ב-"05"
         if (!phone.startsWith("05")) {
             return false;
         }
-
-        // 3. בדיקה שכל התווים הם ספרות
         for (char c : phone.toCharArray()) {
             if (!Character.isDigit(c)) {
-                return false; // אם נמצא תו שאינו ספרה, המספר לא תקין
+                return false;
             }
         }
-
-        // אם כל הבדיקות עברו, המספר תקין
         return true;
     }
 
+    // --- מתודת main להדגמה ---
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        /*
-        switch case להשלמה לאחר בניית התשתית עבור תפריט התחברות הרשמה או יציאה
-         */
-        int selectUser = scanner.nextInt();
-        switch (selectUser){
-            case 1:
-                //System.createuser();
-            case 2:
-                //login;
-            case 3:
-                //exit;
+        // יצירת משתמש חדש (מתווך)
+        User brokerUser = new User("yossi", "Yossi123$", "0541234567", true);
 
-        }
+        // יצירת משתמש חדש (רגיל)
+        User regularUser = new User("dani", "Dani456!", "0527654321", false);
 
-        System.out.print("Please enter a password to verify: ");
-        String pass = scanner.nextLine();
-        boolean isStrong = isStrongPassword(pass);
-        System.out.println("Is password strong? " + isStrong);
+        // הדפסת פרטי המשתמשים באמצעות toString()
+        System.out.println("--- User Details ---");
+        System.out.println(brokerUser); // יקרא אוטומטית ל-brokerUser.toString()
+        System.out.println(regularUser);
 
-        System.out.print("\nPlease enter a phone number to verify: ");
-        String phone = scanner.nextLine();
-        boolean isValid = isValidPhone(phone);
-        System.out.println("Is phone number valid? " + isValid);
+        // בדיקת סיסמה
+        System.out.println("\n--- Password Check ---");
+        System.out.println("Checking password for yossi: " + brokerUser.checkPassword("wrongPass")); // false
+        System.out.println("Checking password for yossi: " + brokerUser.checkPassword("Yossi123$")); // true
 
-        scanner.close();
+        // בדיקות חוקיות סטטיות
+        System.out.println("\n--- Static Validations ---");
+        System.out.println("Is '050111222' a valid phone? " + User.isValidPhone("050111222")); // false (9 ספרות)
+        System.out.println("Is '0501112223' a valid phone? " + User.isValidPhone("0501112223")); // true
+        System.out.println("Is 'pass' a strong password? " + User.isStrongPassword("pass")); // false
+        System.out.println("Is 'pass123$' a strong password? " + User.isStrongPassword("pass123$")); // true
     }
 }
