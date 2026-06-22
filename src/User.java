@@ -20,14 +20,46 @@ public class User {
         return hasDigit && hasSpecialChar;
     }
 
+    /**
+     * בודק האם מספר טלפון הוא מספר ישראלי תקין (10 ספרות, מתחיל ב-05).
+     * @param phone מספר הטלפון לבדיקה.
+     * @return true אם המספר תקין, אחרת false.
+     */
+    private static boolean isValidPhone(String phone) {
+        // 1. בדיקה שהקלט לא ריק ושהוא באורך 10 תווים
+        if (phone == null || phone.length() != 10) {
+            return false;
+        }
+
+        // 2. בדיקה שהמספר מתחיל ב-"05"
+        if (!phone.startsWith("05")) {
+            return false;
+        }
+
+        // 3. בדיקה שכל התווים הם ספרות
+        for (char c : phone.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false; // אם נמצא תו שאינו ספרה, המספר לא תקין
+            }
+        }
+
+        // אם כל הבדיקות עברו, המספר תקין
+        return true;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Please enter a password to verify: ");
         String pass = scanner.nextLine();
         boolean isStrong = isStrongPassword(pass);
-        System.out.println(isStrong);
+        System.out.println("Is password strong? " + isStrong);
+
+        System.out.print("\nPlease enter a phone number to verify: ");
+        String phone = scanner.nextLine();
+        boolean isValid = isValidPhone(phone);
+        System.out.println("Is phone number valid? " + isValid);
 
         scanner.close();
     }
-}
+}ומ
