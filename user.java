@@ -5,7 +5,7 @@ public class User {
     public static boolean isStrongPassword(String password){
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
-        for (int i = 0; i < password.length; i++) {
+        for (int i = 0; i < password.length(); i++) {
             char c = password.charAt(i);
 
             // בדיקה האם התו הוא ספרה
@@ -18,14 +18,9 @@ public class User {
                 hasSpecialChar = true;
             }
         }
-        if (hasDigit == true && hasSpecialChar == true){
-            return true;
-        }
-        return false;
-
         return hasDigit && hasSpecialChar;
     }
     public static void main(String[] args){
-        System.out.println(isStrongPassword(123y!i));
+        System.out.println(isStrongPassword("123y!i"));
     }
 }
