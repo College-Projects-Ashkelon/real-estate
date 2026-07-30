@@ -11,24 +11,14 @@ public class User {
         this.isBroker = isBroker;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public boolean isBroker() {
-        return isBroker;
-    }
-
-    public boolean checkPassword(String pass) {
-        return this.password.equals(pass);
-    }
+    public String getUsername() { return username; }
+    public String getPhone() { return phone; }
+    public boolean isBroker() { return isBroker; }
+    public boolean checkPassword(String inputPassword) { return password.equals(inputPassword); }
 
     @Override
     public String toString() {
-        return "Username: " + username + ", Phone: " + phone + ", Type: " + (isBroker ? "Broker" : "Regular user");
+        String role = isBroker ? "real estate broker" : "regular user";
+        return username + " " + phone + " (" + role + ")";
     }
 }

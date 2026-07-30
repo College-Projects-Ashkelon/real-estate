@@ -2,18 +2,21 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         RealEstateSystem system = new RealEstateSystem();
-        Scanner scanner = new Scanner(scanner.getProperties());
+        boolean running = true;
 
-        while (true) {
-            System.out.println("1. Create User");
+        while (running) {
+            System.out.println("=== Real Estate System ===");
+            System.out.println("1. Create account");
             System.out.println("2. Login");
-            System.out.println("3. Exit");
-            int choice = scanner.nextInt();
+            System.out.println("0. Exit");
+            System.out.print("Choose: ");
+            String choice = scanner.nextLine();
 
-            if (choice == 3) {
-                break;
-            }
-        }
-    }
-}
+            switch (choice) {
+                case "1":
+                    // TODO: REQ-001 createUser()
+                    break;
+                case "2":
+                    // TODO:
