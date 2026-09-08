@@ -38,8 +38,8 @@ public class Property {
                 : "floor " + floor;
         String role = publisher.isBroker() ? "real estate broker" : "owner";
 
-        return propertyType + " -- " + dealType + ": " + rooms + " rooms, " + floorInfo +
-                ". Price: " + priceFormatted + "$. Contact info: " +
-                publisher.getUsername() + " " + publisher.getPhone() + " (" + role + ").";
+        return propertyType + " -- " + dealType + ": " + rooms + " rooms, " + floorInfo + ".\n" +
+                "Price: " + priceFormatted + "$.\n" +
+                "Contact info: " + publisher.getUsername() + " " + publisher.getPhone() + " (" + role + ").";
     }
 }
