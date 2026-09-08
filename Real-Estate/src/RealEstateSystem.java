@@ -458,6 +458,11 @@ public class RealEstateSystem {
 
     // REQ-001: createUser()
     public void createUser() {
+        if (userCount >= users.length) {
+            System.out.println("System storage for users is full.");
+            return;
+        }
+
         System.out.print("Enter username: ");
         String username = scanner.nextLine().trim();
         while (isUsernameTaken(username)) {
@@ -508,26 +513,11 @@ public class RealEstateSystem {
 
     // Validation helper methods
     public static boolean isStrongPassword(String pass) {
-        if (pass == null || pass.isEmpty()) return false;
-        boolean hasDigit = false;
-        boolean hasSpecialChar = false;
-        for (char c : pass.toCharArray()) {
-            if (Character.isDigit(c)) {
-                hasDigit = true;
-            } else if (c == '$' || c == '%' || c == '_') {
-                hasSpecialChar = true;
-            }
-        }
-        return hasDigit && hasSpecialChar;
+        return User.isValidPassword(pass);
     }
 
     public static boolean isValidPhone(String phone) {
-        if (phone == null || phone.length() != 10) return false;
-        if (!phone.startsWith("05")) return false;
-        for (char c : phone.toCharArray()) {
-            if (!Character.isDigit(c)) return false;
-        }
-        return true;
+        return User.isValidPhone(phone);
     }
 
     public boolean isUsernameTaken(String username) {

@@ -34,11 +34,12 @@ public class Property {
         String dealType = forRent ? "for rent" : "for sale";
         String priceFormatted = String.format("%,.0f", price);
         String floorInfo = propertyType.equals("Private house")
-                ? "house no. " + houseNumber
-                : "floor " + floor;
-        String role = publisher.isBroker() ? "real estate broker" : "owner";
+                ? ""
+                : ", floor " + floor;
+        String role = publisher.isBroker() ? "real estate broker" : "regular user";
 
-        return propertyType + " -- " + dealType + ": " + rooms + " rooms, " + floorInfo + ".\n" +
+        return propertyType + " -- " + dealType + ": " + rooms + " rooms" + floorInfo + ".\n" +
+                address.getCity() + ", " + address.getStreet() + " " + houseNumber + ".\n" +
                 "Price: " + priceFormatted + "$.\n" +
                 "Contact info: " + publisher.getUsername() + " " + publisher.getPhone() + " (" + role + ").";
     }
